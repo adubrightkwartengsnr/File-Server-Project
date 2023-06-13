@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "main",
     "accounts",
-    "crispy_forms"
+    "crispy_forms",
 
 ]
 
@@ -57,7 +57,8 @@ ROOT_URLCONF = "filehub.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, 'file_hub/filehub/templates'),],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -115,14 +116,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR,"static")
 
+# MEDIA FILES
+MEDIA_URL = "/uploads/"
+MEDIA_ROOT = os.path.join(BASE_DIR,"uploads")
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Crispy forms bootstrap
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 LOGIN_REDIRECT_URL = 'home'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
