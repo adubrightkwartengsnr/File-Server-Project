@@ -48,9 +48,11 @@
   </div>
         <div class="navbar-nav">
                 {% if user.is_authenticated %}
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <form method = "GET" action = "{% url 'search' %}" class = "d-flex" role = "search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "query" id = "query">
             <button class="btn btn-outline-success" type="submit">Search</button>
-            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+          </form>
+          <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                 {% endif %}
         </div>
 </nav>

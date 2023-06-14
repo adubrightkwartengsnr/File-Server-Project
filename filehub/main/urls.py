@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path("",views.home,name="home"),
-    path("file-list/",views.file_view,name="file-list")
+    path("file-list/",views.file_view,name="file-list"),
+    path("search/",views.search_view,name="search")
 ]
 
 if settings.DEBUG:
