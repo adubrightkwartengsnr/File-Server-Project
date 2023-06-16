@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "main",
     "accounts",
     "crispy_forms",
+    "crispy_bootstrap4",
+    "storages",
 
 ]
 
@@ -101,6 +103,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    
+]
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -127,8 +135,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR,"uploads")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Crispy forms bootstrap
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
-LOGIN_REDIRECT_URL = 'home'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Login urls 
+LOGIN_URL = 'accounts/login/'
+LOGIN_REDIRECT_URL = 'file-list'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
