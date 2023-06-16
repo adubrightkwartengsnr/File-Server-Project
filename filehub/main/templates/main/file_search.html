@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+<h1>Search Results</h1>
+<div class="container">
+<p>Showing results for: {{ query }}</p>
+
+{% if files %}
+    <ul>
+        {% for file in files %}
+            <li>{{ file.title }}</li>
+            <p>{{ file.description }}</p>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No files found.</p>
+{% endif %}
+</div>
+{% endblock content %}

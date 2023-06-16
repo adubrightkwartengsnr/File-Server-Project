@@ -327,3 +327,7 @@ padding: 6px ;
   cursor: pointer;
 }
 
+/* Styling for file_search*/
+.search-header{
+    text-align: center;
+}
