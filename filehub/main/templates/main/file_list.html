@@ -143,7 +143,7 @@
             $(".file-library[data-category='" + category + "']").show();
         });
     });
-
+{% comment %}  
     $(document).ready(function() {
         $('.btn-details').click(function(e) {
           e.preventDefault(); // Prevent the default button behavior
@@ -170,58 +170,46 @@
         });
       });
       
-      $(document).ready(function() {
-        $('.btn-details').click(function(e) {
-          e.preventDefault(); // Prevent the default button behavior
-      
-          var fileUrl = $(this).parent().attr('href');
-          var videoTag = $('<video>').attr('src', fileUrl).attr('controls', 'true').addClass('preview-video');
-      
-          // Create a container div for the preview video and download button
-          var container = $('<div>').addClass('preview-container');
-          container.append(videoTag);
-      
-          // Append the container to the parent of the button
-          $(this).parent().append(container);
-      
-          var newWindow = window.open('', '_blank');
-          newWindow.document.write('<html><head><title>Video Preview</title>');
-          newWindow.document.write('<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">');
-          newWindow.document.write('</head><body><div class="preview-window"></div></body></html>');
-          newWindow.document.querySelector('.preview-window').appendChild(container[0]);
-      
-          // Create the download button and append it to the container
-          var downloadBtn = $('<a>').attr('href', fileUrl).addClass('preview-download-btn').text('Download');
-          container.append(downloadBtn);
-        });
-      });
-      
-      // The script to handle videos
-      {% comment %} $(document).ready(function() {
-        $('.btn-details').click(function(e) {
-          e.preventDefault(); // Prevent the default button behavior
-      
-          var fileUrl = $(this).parent().attr('href');
-          var videoTag = $('<video>').attr('src', fileUrl).attr('controls', 'controls').addClass('preview-video');
-      
-          // Create a container div for the preview video and download button
-          var container = $('<div>').addClass('preview-container');
-          container.append(videoTag);
-      
-          // Append the container to the parent of the button
-          $(this).parent().append(container);
-      
-          var newWindow = window.open('', '_blank');
-          newWindow.document.write('<html><head><title>Video Preview</title>');
-          newWindow.document.write('<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">');
-          newWindow.document.write('</head><body><div class="preview-window"></div></body></html>');
-          newWindow.document.querySelector('.preview-window').appendChild(container[0]);
-      
-          // Create the download button and append it to the container
-          var downloadBtn = $('<a>').attr('href', fileUrl).addClass('preview-download-btn').text('Download');
-          container.append(downloadBtn);
-        });
-      });
        {% endcomment %}
+
+$(document).ready(function() {
+    $('.btn-details').click(function(e) {
+        e.preventDefault();
+
+        var fileUrl = $(this).attr('href');
+        var fileType = $(this).closest('.file-library').data('category');
+
+        var previewContainer;
+        var previewElement;
+
+        if (fileType === 'photos') {
+            previewContainer = $('<div>').addClass('preview-container');
+            previewElement = $('<img>').attr('src', fileUrl).attr('alt', 'Preview Image').addClass('preview-image');
+        } else if (fileType === 'videos') {
+            previewContainer = $('<div>').addClass('preview-container');
+            previewElement = $('<video>').attr('src', fileUrl).attr('controls', 'true').addClass('preview-video');
+        } else if (fileType === 'pdfs') {
+            previewContainer = $('<div>').addClass('preview-container');
+            previewElement = $('<iframe>').attr('src', fileUrl).addClass('preview-pdf');
+        } else if (fileType === 'audios') {
+            previewContainer = $('<div>').addClass('preview-container');
+            previewElement = $('<audio>').attr('src', fileUrl).attr('controls', 'true').addClass('preview-audio');
+            }
+
+        previewContainer.append(previewElement);
+
+        // Open the preview in a new tab
+        var newWindow = window.open('', '_blank');
+        newWindow.document.write('<html><head><title>File Preview</title>');
+        newWindow.document.write('<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">');
+        newWindow.document.write('</head><body><div class="preview-window"></div></body></html>');
+        newWindow.document.querySelector('.preview-window').appendChild(previewContainer[0]);
+
+        // Create the download button and append it to the container
+        var downloadBtn = $('<a>').attr('href', fileUrl).attr('download', '').addClass('preview-download-btn').text('Download');
+        previewContainer.append(downloadBtn);
+        });
+    });
+           
 </script> 
 {% endblock content %}
