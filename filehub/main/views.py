@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .models import File
 from django.db import models
-from django.http import HttpResponse
+from django.http import HttpResponse,FileResponse
 import requests
 from urllib.parse import urljoin
 
@@ -25,7 +25,7 @@ def search_view(request):
 
 def preview_file(request,file_id):
     file_obj = File.objects.get(id=file_id)
-    file_url = file_obj.file.url
+    file_url = file_obj.file.path
     
     # Get the base url of the application
     base_url = request.build_absolute_uri('/')[:-1]
@@ -35,4 +35,32 @@ def preview_file(request,file_id):
     # Get the content of the file
     response = requests.get(absolute_file_url)
     
+    
     return HttpResponse(response.content)
+
+
+
+# def preview_file(request,file_id):
+#     file_obj = File.objects.get(id=file_id)
+#     file_path = file_obj.file.path
+#     response = FileResponse(open(file_path,'rb'))
+#     return response
+
+# Function for download file
+def file_download(request,file_id):
+    file_obj = get_object_or_404(File,pk=file_id)
+    file_path = file_obj.file.path
+    
+    # Increment the number of downloads
+    file_obj.downloads += 1
+    file_obj.save()
+    # Get the content and content type of the file
+    open_file = open(file_path,'rb')
+    response = FileResponse(open_file)
+    # Set the content type header
+    response['Content-Type'] = 'application/octet-stream'
+    # Set the content-disposition
+    response['Content-Disposition'] = f'attachment; filename = "{file_obj.file.name}"'
+    return response
+
+    

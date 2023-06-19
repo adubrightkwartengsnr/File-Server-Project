@@ -31,7 +31,7 @@
                     <p>{{ file.description }}</p>
                 </div>
                 <div class="card-actions">
-                    <a>
+                    <a href="{% url 'file-download' file.id %}"> 
                     <button class="btn-download">
                         <i class="fas fa-download"></i>Download</button>
                     </a>
@@ -51,7 +51,7 @@
             <p>{{ file.description }}</p>
         </div>
         <div class="card-actions">
-            <a href="{{ file.file_url }}" class="no-underline" target="_blank">
+            <a href="{% url 'file-download' file.id %}" class="no-underline" target="_blank">
                 <button class="btn-download">
                     <i class="fas fa-download"></i>Download
                 </button>
@@ -73,7 +73,7 @@
             <p>{{ file.description }}</p>
         </div>
         <div class="card-actions">
-            <a href="{{ file.file_url }}" class="no-underline" target="_blank">
+            <a href="{% url 'file-download' file.id %}" class="no-underline" target="_blank">
                 <button class="btn-download">
                     <i class="fas fa-download"></i>Download
                 </button>
@@ -89,13 +89,13 @@
 
 {% else %}
 <div class="file-library" data-category="audios">
-    <div class="card">
+<div class="card">
         <div class="card-content">
             <h4>{{ file.title }}</h4>
             <p>{{ file.description }}</p>
         </div>
         <div class="card-actions">
-            <a href="{{ file.file_url }}" class="no-underline" target="_blank">
+            <a href="{% url 'file-download' file.id %}" class="no-underline" target="_blank">
                 <button class="btn-download">
                     <i class="fas fa-download"></i>Download
                 </button>
@@ -107,7 +107,7 @@
             </a>
         </div>
     </div>
-</div>
+</div> 
 
         {% endif %}
         {% endfor %}
@@ -175,9 +175,8 @@
 $(document).ready(function() {
     $('.btn-details').click(function(e) {
         e.preventDefault();
-
-        var fileUrl = $(this).attr('href');
-        var fileType = $(this).closest('.file-library').data('category');
+       var fileUrl = $(this).parent().prev('.btn-download').attr('href');
+       var fileType = $(this).closest('.file-library').data('category');
 
         var previewContainer;
         var previewElement;
