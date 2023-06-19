@@ -5,6 +5,7 @@ from django.db import models
 from django.http import HttpResponse,FileResponse
 import requests
 from urllib.parse import urljoin
+from .forms import EmailForm
 
 
 def home(request):
@@ -23,28 +24,28 @@ def search_view(request):
     context = {'files':files ,'query':query}
     return render(request, 'main/file_search.html', context)
 
-def preview_file(request,file_id):
-    file_obj = File.objects.get(id=file_id)
-    file_url = file_obj.file.path
-    
-    # Get the base url of the application
-    base_url = request.build_absolute_uri('/')[:-1]
-    
-    # join base_url with file_url to get the absolute_file_url
-    absolute_file_url= urljoin(base_url,file_url)
-    # Get the content of the file
-    response = requests.get(absolute_file_url)
-    
-    
-    return HttpResponse(response.content)
-
-
-
 # def preview_file(request,file_id):
 #     file_obj = File.objects.get(id=file_id)
-#     file_path = file_obj.file.path
-#     response = FileResponse(open(file_path,'rb'))
-#     return response
+#     file_url = file_obj.file.path
+    
+#     # Get the base url of the application
+#     base_url = request.build_absolute_uri('/')[:-1]
+    
+#     # join base_url with file_url to get the absolute_file_url
+#     absolute_file_url= urljoin(base_url,file_url)
+#     # Get the content of the file
+#     response = requests.get(absolute_file_url)
+    
+    
+#     return HttpResponse(response.content)
+
+
+
+def preview_file(request,file_id):
+    file_obj = File.objects.get(id=file_id)
+    file_path = file_obj.file.path
+    response = FileResponse(open(file_path,'rb'))
+    return response
 
 # Function for download file
 def file_download(request,file_id):
@@ -57,10 +58,22 @@ def file_download(request,file_id):
     # Get the content and content type of the file
     open_file = open(file_path,'rb')
     response = FileResponse(open_file)
-    # Set the content type header
+    # Set the content type 
     response['Content-Type'] = 'application/octet-stream'
     # Set the content-disposition
     response['Content-Disposition'] = f'attachment; filename = "{file_obj.file.name}"'
     return response
+
+    
+def email_form(request,file_id):
+    form = EmailForm
+    file = get_object_or_404(File,pk=file_id)
+    context = {
+        'form':form,
+        'file':file
+    }
+    return render(request,'main/send_email.html',context) 
+
+
 
     
