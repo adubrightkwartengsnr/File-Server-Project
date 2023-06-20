@@ -1,11 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from .models import File
 from django.db import models
 from django.http import HttpResponse,FileResponse
 import requests
 from urllib.parse import urljoin
 from .forms import EmailForm
+from django.core.mail import EmailMessage
+from django.contrib import messages
+import mimetypes
 
 
 def home(request):
@@ -72,8 +75,40 @@ def email_form(request,file_id):
         'form':form,
         'file':file
     }
-    return render(request,'main/send_email.html',context) 
+    return render(request,'main/send_email.html',context)
+ 
+def send_email(request,file_id):
+    file_obj = get_object_or_404(File,pk=file_id)
+    file_path =file_obj.file.path
+    if request.method == 'POST':
+        form = EmailForm(request.POST) 
+        if form.is_valid():
+            email = EmailMessage(
+                subject = form.cleaned_data['subject'],
+                body = form.cleaned_data['body'],
+                from_email="noreply@filehub.com",
+                to = [form.cleaned_data['to']],headers={'From':'File Hub <noreply@filehub.com>'}    
+            )
+            with open(file_path,'rb') as opened_file:
+                # response = requests.get(file_path)
+                # Determine the content type of the file being sent
+                content_type = mimetypes.guess_type(file_path)[0]
+                # Attach file content to the email been sent
+                email.attach(file_obj.title,opened_file.read(),content_type)
+            # Send the email
+            email.send()
+            
+            # Increase the number of emails sent from a specific file
+            file_obj.emails_sent += 1
+            file_obj.save()
+            
+            # Send Success message
+            messages.success(request,f'File Successfully sent to {form.cleaned_data["to"]}')
+            return redirect('file-list')
+        else:
+            form =EmailForm()
+            
+        return render(request,'main/send_email.html',{'form':form})
+    return HttpResponse("Invalid request") 
 
-
-
-    
+        

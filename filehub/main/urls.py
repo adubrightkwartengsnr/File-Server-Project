@@ -8,7 +8,8 @@ urlpatterns = [
     path("search/",views.search_view,name="search"),
     path("file-list/<int:file_id>/preview/",views.preview_file,name='file-preview'),
     path("file-list/<int:file_id>/",views.file_download,name='file-download'),
-    path("email/<int:file_id>/",views.email_form,name='email-form')
+    path("email-form/<int:file_id>/",views.email_form,name='email-form'),
+    path("send_email/<int:file_id>",views.send_email,name='send-email')
 ]
 
 if settings.DEBUG:
