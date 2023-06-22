@@ -9,6 +9,7 @@ from .forms import EmailForm
 from django.core.mail import EmailMessage
 from django.contrib import messages
 import mimetypes
+import os
 
 
 def home(request):
@@ -27,28 +28,21 @@ def search_view(request):
     context = {'files':files ,'query':query}
     return render(request, 'main/file_search.html', context)
 
-# def preview_file(request,file_id):
-#     file_obj = File.objects.get(id=file_id)
-#     file_url = file_obj.file.path
-    
-#     # Get the base url of the application
-#     base_url = request.build_absolute_uri('/')[:-1]
-    
-#     # join base_url with file_url to get the absolute_file_url
-#     absolute_file_url= urljoin(base_url,file_url)
-#     # Get the content of the file
-#     response = requests.get(absolute_file_url)
-    
-    
-#     return HttpResponse(response.content)
-
-
-
 def preview_file(request,file_id):
-    file_obj = File.objects.get(id=file_id)
+    file_obj = get_object_or_404(File,id=file_id)
     file_path = file_obj.file.path
-    response = FileResponse(open(file_path,'rb'))
+    file_type,_ = mimetypes.guess_type(file_path)
+    
+    with open(file_path,'rb') as file:
+        response = HttpResponse(file.read())
+        response['Content-Type'] = file_type
+        # response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+        response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+
+        
     return response
+
+    
 
 # Function for download file
 def file_download(request,file_id):

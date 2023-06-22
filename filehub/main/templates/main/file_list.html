@@ -21,34 +21,34 @@
         <label for="checkbox4">PDFs</label>
     </div>
 
-    <div class="file-gallery">
-        {% for file in files %}
-        {% if file.file_type == "image" %}
-        <div class="file-library" data-category="photos">
-            <div class="card">
-                <div class="card-content">
-                    <h4>{{ file.title }}</h4>
-                    <p>{{ file.description }}</p>
-                </div>
-                <div class="card-actions">
-                    <a href="{% url 'file-download' file.id %}"> 
+<div class="file-gallery">
+    {% for file in files %}
+    {% if file.file_type == "image" %}
+    <div class="file-library" data-category="photos">
+        <div class="card">
+            <div class="card-content">
+                <h4>{{ file.title }}</h4>
+                <p>{{ file.description }}</p>
+            </div>
+            <div class="card-actions">
+                <a href="{% url 'file-download' file.id %}"> 
+                <button class="btn btn-light">
+                <i class="fas fa-download"></i>Download</button>
+                </a>
+                <a href="{% url 'email-form' file.id %}" class="no-underline">
                     <button class="btn btn-light">
-                        <i class="fas fa-download"></i>Download</button>
-                    </a>
-                    <a href="{% url 'email-form' file.id %}" class="no-underline">
-                        <button class="btn btn-light">
-                            <i class="fa fa-paper-plane"></i>Send
-                        </button>
-                    </a>
-                    <a href="{% url 'file-preview' file.id %}" class="no-underline" target="_blank">
+                    <i class="fa fa-paper-plane"></i>Send
+                    </button>
+                </a>
+                <a href="{% url 'file-preview' file.id %}" class="no-underline " target="_blank">
                     <button class="btn btn-light">
                         <i class="fa fa-file"></i>Preview</button>
-                    </a>
-                </div>
+                </a>
             </div>
         </div>
+    </div>
 
-        {% elif file.file_type == "video" %}
+{% elif file.file_type == "video" %}
 <div class="file-library" data-category="videos">
     <div class="card">
         <div class="card-content">
@@ -56,7 +56,7 @@
             <p>{{ file.description }}</p>
         </div>
         <div class="card-actions">
-            <a href="{% url 'file-download' file.id %}" class="no-underline" target="_blank">
+            <a href="{% url 'file-download' file.id %}" class="no-underline">
                 <button class="btn btn-light">
                     <i class="fa fa-download"></i>Download
                 </button>
@@ -66,24 +66,23 @@
                     <i class="fa fa-paper-plane"></i>Send
                 </button>
             </a>
-            <a href="{% url 'file-preview' file.id %}" class="no-underline" target="_blank">
+            <a href="{% url 'file-preview' file.id %}" class="no-underline " target="_blank">
                 <button class="btn btn-light">
-                    <i class="fa fa-file"></i>Preview
-                </button>
+                    <i class="fa fa-file"></i>Preview</button>
             </a>
         </div>
     </div>
 </div>
 
-        {% elif file.file_type == "pdf" %}
+{% elif file.file_type == "pdf" %}
 <div class="file-library" data-category="pdfs">
     <div class="card">
         <div class="card-content">
             <h4>{{ file.title }}</h4>
             <p>{{ file.description }}</p>
         </div>
-        <div class="card-actions">
-            <a href="{% url 'file-download' file.id %}" class="no-underline" target="_blank">
+        <div id = "pdf-container" class="card-actions">
+            <a href="{% url 'file-download' file.id %}" class="no-underline">
                 <button class="btn btn-light">
                     <i class="fa fa-download"></i>Download
                 </button>
@@ -95,8 +94,7 @@
             </a>
             <a href="{% url 'file-preview' file.id %}" class="no-underline" target="_blank">
                 <button class="btn btn-light">
-                    <i class="fa fa-file"></i>Preview
-                </button>
+                    <i class="fa fa-file"></i>Preview</button>
             </a>
         </div>
     </div>
@@ -110,7 +108,7 @@
             <p>{{ file.description }}</p>
         </div>
         <div class="card-actions">
-            <a href="{% url 'file-download' file.id %}" class="no-underline" target="_blank">
+            <a href="{% url 'file-download' file.id %}" class="no-underline">
                 <button class="btn btn-light">
                     <i class="fa fa-download"></i>Download
                 </button>
@@ -120,10 +118,9 @@
                     <i class="fa fa-paper-plane"></i>Send
                 </button>
             </a>
-            <a href="{% url 'file-preview' file.id %}" class="no-underline" target="_blank">
+            <a href="{% url 'file-preview' file.id %}" class="no-underline" >
                 <button class="btn btn-light">
-                    <i class="fa fa-file"></i>Preview
-                </button>
+                    <i class="fa fa-file"></i>Preview</button>
             </a>
         </div>
     </div>
@@ -134,9 +131,10 @@
     </div>
 </div>
 
-<script src="{% static 'fa/js/all.min.js' %}"></script>
 <script src ="{% static 'main/file_link.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<script src = "{% static 'build/pdf.js' %}"></script>
+<script src = "{% static 'web/viewer.js' %}"></script>
 <script>
     $(document).ready(function () {
         $("label[for='checkbox1']").click(function () {
@@ -163,72 +161,23 @@
             $(".file-library[data-category='" + category + "']").show();
         });
     });
-{% comment %}  
-    $(document).ready(function() {
-        $('.btn-details').click(function(e) {
-          e.preventDefault(); // Prevent the default button behavior
-      
-          var fileUrl = $(this).parent().attr('href');
-          var imgTag = $('<img>').attr('src', fileUrl).attr('alt', 'Preview Image').addClass('preview-image');
-      
-          // Create a container div for the preview image and download button
-          var container = $('<div>').addClass('preview-container');
-          container.append(imgTag);
-      
-          // Append the container to the parent of the button
-          $(this).parent().append(container);
-          
-          var newWindow = window.open('', '_blank');
-          newWindow.document.write('<html><head><title>Image Preview</title>');
-          newWindow.document.write('<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">');
-          newWindow.document.write('</head><body><div class="preview-window"></div></body></html>');
-          newWindow.document.querySelector('.preview-window').appendChild(container[0]);
-      
-          // Create the download button and append it to the container
-          var downloadBtn = $('<a>').attr('href', fileUrl).addClass('preview-download-btn').text('Download');
-          container.append(downloadBtn);
-        });
-      });
-      
-       {% endcomment %}
 
-$(document).ready(function() {
-    $('.btn-details').click(function(e) {
-        e.preventDefault();
-       var fileUrl = $(this).parent().prev('.btn-download').attr('href');
-       var fileType = $(this).closest('.file-library').data('category');
+{% comment %} Handling Pdf Preview {% endcomment %}
 
-        var previewContainer;
-        var previewElement;
+// Get the Container Element
+var container = document.getElementById("pdf-container");
 
-        if (fileType === 'photos') {
-            previewContainer = $('<div>').addClass('preview-container');
-            previewElement = $('<img>').attr('src', fileUrl).attr('alt', 'Preview Image').addClass('preview-image');
-        } else if (fileType === 'videos') {
-            previewContainer = $('<div>').addClass('preview-container');
-            previewElement = $('<video>').attr('src', fileUrl).attr('controls', 'true').addClass('preview-video');
-        } else if (fileType === 'pdfs') {
-            previewContainer = $('<div>').addClass('preview-container');
-            previewElement = $('<iframe>').attr('src', fileUrl).addClass('preview-pdf');
-        } else if (fileType === 'audios') {
-            previewContainer = $('<div>').addClass('preview-container');
-            previewElement = $('<audio>').attr('src', fileUrl).attr('controls', 'true').addClass('preview-audio');
-            }
+// Configure the Viewer Options
+var viewerOptions = {
+    container: container
+};
 
-        previewContainer.append(previewElement);
+// Get the file path from the Django template variable
+var filePath = "{{ file_path }}";
 
-        // Open the preview in a new tab
-        var newWindow = window.open('', '_blank');
-        newWindow.document.write('<html><head><title>File Preview</title>');
-        newWindow.document.write('<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">');
-        newWindow.document.write('</head><body><div class="preview-window"></div></body></html>');
-        newWindow.document.querySelector('.preview-window').appendChild(previewContainer[0]);
+// Load the PDF file
+PDFViewerApplication.open(filePath, viewerOptions);
 
-        // Create the download button and append it to the container
-        var downloadBtn = $('<a>').attr('href', fileUrl).attr('download', '').addClass('preview-download-btn').text('Download');
-        previewContainer.append(downloadBtn);
-        });
-    });
-           
-</script> 
+
+</script>  
 {% endblock content %}
