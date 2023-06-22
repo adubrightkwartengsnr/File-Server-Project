@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
 ]
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -103,9 +105,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    
+       
 ]
 
 
@@ -147,3 +151,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+PASSWORD_RESET_TIMEOUT = 14400000
+DEFAULT_FROM_EMAIL = 'File Hub <noreply@filehub.com>'
+
+
