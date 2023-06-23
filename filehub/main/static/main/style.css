@@ -10,7 +10,7 @@ input {
   display: none;
 }
 
-.container {
+.message-container {
   width: 100%;
   text-align: center;
 }
@@ -32,6 +32,24 @@ h1::before {
   left: 50%;
   transform: translateX(-50%);
   animation: animate 4s linear infinite;
+}
+
+/* Navbar Styling */
+
+.navbar-nav .nav-item{
+  font-size: 20px;
+  margin-right: 15px;
+  
+}
+
+.navbar-nav .nav-link{
+
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover{
+  color: rgba(0, 0, 0, 0.103);
 }
 
 @keyframes animate {
@@ -78,7 +96,9 @@ label {
 label:hover {
   color: black;
 }
-
+.library-header{
+  text-align: center;
+}
 .file-gallery {
   width: 90%;
   margin: auto;
@@ -129,28 +149,6 @@ label:hover {
   justify-content: space-between;
 }
 
-.btn-download,
-.btn-details {
-padding: 6px ;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: #fff;
-}
-
-.btn-download i,
-.btn-details i {
-  padding-right: 5px;
-
-}
-
-.btn-download:hover,
-.btn-details:hover {
-  background-color: #0056b3;
-  cursor: pointer;
-}
-
 /* Styling for file_search*/
 .search-header{
     text-align: center;
@@ -195,4 +193,81 @@ padding: 6px ;
 .preview-download-btn:hover{
   background-color: #0056b3;
   cursor: pointer;
+}
+
+
+/* Media Queries For Mobile Views */
+@media only screen and (max-width:767px){
+  /* Adjust Styles For Mobile View */
+
+  h1{
+    font-size: 25px;
+  }
+  
+  .navbar-nav .nav-item{
+    font-size: 16px;
+    margin-right:10px ;
+  }
+
+  label{
+    font-size: 15px;
+    margin: 0 9px;
+  }
+  .file-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .file-header{
+    line-height: 2rem;
+    
+  } 
+
+
+
+  .top-content{
+    
+    width: auto;
+    padding: 0 1px;
+    padding-left: 5px;
+    margin-left: 10px;
+    margin-right: 10px; 
+     
+  } 
+
+  .file-gallery{
+    grid-template-columns: 1fr;
+    display: grid;
+    gap: 20px;
+  }
+
+  .card{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .card h4{
+    font-size: 16px;
+  }
+
+  .card-content{
+    flex-grow: 1;
+  }
+
+  .card-actions{
+    
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .btn-light {
+
+    padding: 4px 8px;
+    font-size: 12px;
+    
+  }
+
 }

@@ -1,7 +1,7 @@
 django-crispy-forms
 requests
 six
-crispy-bootstrap-4
+crispy-bootstrap
 asgiref
 charset-normalizer
 sqlparse
@@ -27,3 +27,5 @@ python-dateutil
 python-dotenv
 python-magic
 python3-openid
+python-decouple
+decouple

@@ -1,8 +1,40 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block title %}Home {% endblock title %}
 
 {% block content %}
-<h1>This is the home page </h1>
 
+<style>
+    body{
+        background-image : url("{% static 'images/background-img.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .home-content{
+        text-align: left;
+        padding: 50px;
+        color:snow;
+        font-family:"Arial",sans-serif;
+        height: 50vh;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        }
+
+    .home-content h1{
+        font-size: 36px;
+        margin-bottom: 20px; 
+        text-align: center;
+    }
+
+
+</style>
+<div class="home-content">
+    <h1>Welcome to File Hub!</h1>
+<div>
 {% endblock content %}
