@@ -1,0 +1,273 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+input {
+  display: none;
+}
+
+.message-container {
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 35px;
+  position: relative;
+  margin: 40px 0;
+}
+
+h1::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 3px;
+  background-color: crimson;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: animate 4s linear infinite;
+}
+
+/* Navbar Styling */
+
+.navbar-nav .nav-item{
+  font-size: 20px;
+  margin-right: 15px;
+  
+}
+
+.navbar-nav .nav-link{
+
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover{
+  color: rgba(0, 0, 0, 0.103);
+}
+
+@keyframes animate {
+  0% {
+    width: 100px;
+  }
+  50% {
+    width: 200px;
+  }
+  100% {
+    width: 100px;
+  }
+}
+
+.top-content {
+  background-color: rgb(236, 229, 229);
+  width: 90%;
+  margin: 0 auto 20px auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 3px 5px 7px lightgray;
+}
+
+h3 {
+  height: 100%;
+  background-color: lightgray;
+  line-height: 60px;
+  padding: 0 50px;
+}
+
+label {
+  display: inline-block;
+  height: 100%;
+  margin: 0 30px;
+  line-height: 60px;
+  font-size: 18px;
+  color: gray;
+  cursor: pointer;
+  transition: color 0.5s;
+}
+
+label:hover {
+  color: black;
+}
+.library-header{
+  text-align: center;
+}
+.file-gallery {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+#check1:checked ~ .container .file-gallery .file,
+#check2:checked ~ .container .file-gallery .video,
+#check3:checked ~ .container .file-gallery .audio,
+#check4:checked ~ .container .file-gallery .pdfs {
+  opacity: 1;
+  transform: scale(1);
+  position: relative;
+  transition: 0.5s;
+}
+
+/* Card Styles */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f8f8f8;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+
+}
+
+.card h4 {
+  font-size: 18px;
+  color: #333;
+}
+
+.card p {
+  color: #666;
+}
+
+/* Button Styles */
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Styling for file_search*/
+.search-header{
+    text-align: center;
+}
+
+/* preview image style */
+
+/* preview container */
+
+.preview-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.preview-image{
+  max-width: 100%;
+  height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+}
+
+.preview-download-btn{
+  display: block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.preview-download-btn:hover{
+  background-color: #0056b3;
+  cursor: pointer;
+}
+
+
+/* Media Queries For Mobile Views */
+@media only screen and (max-width:767px){
+  /* Adjust Styles For Mobile View */
+
+  h1{
+    font-size: 25px;
+  }
+  
+  .navbar-nav .nav-item{
+    font-size: 16px;
+    margin-right:10px ;
+  }
+
+  label{
+    font-size: 15px;
+    margin: 0 9px;
+  }
+  .file-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .file-header{
+    line-height: 2rem;
+    
+  } 
+
+
+
+  .top-content{
+    
+    width: auto;
+    padding: 0 1px;
+    padding-left: 5px;
+    margin-left: 10px;
+    margin-right: 10px; 
+     
+  } 
+
+  .file-gallery{
+    grid-template-columns: 1fr;
+    display: grid;
+    gap: 20px;
+  }
+
+  .card{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .card h4{
+    font-size: 16px;
+  }
+
+  .card-content{
+    flex-grow: 1;
+  }
+
+  .card-actions{
+    
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .btn-light {
+
+    padding: 4px 8px;
+    font-size: 12px;
+    
+  }
+
+}
