@@ -62,7 +62,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "filehub.urls"
 
-CSRF_TRUSTED_ORIGINS = ['https://file-server-project-production-6122.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://file-server-project-production.up.railway.app/']
 
 TEMPLATES = [
     {
