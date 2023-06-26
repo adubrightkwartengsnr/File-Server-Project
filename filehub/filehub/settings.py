@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 load_dotenv()
 
 
@@ -86,24 +87,18 @@ WSGI_APPLICATION = "filehub.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
-# Railway MySQL Database
+# Railway Postgre Database Configuration
+DATABASE_URL = "postgresql://postgres:RXG98veNv31zoMODJ9be@containers-us-west-153.railway.app:6476/railway"
 DATABASES = {
-    "default":
-        {
-            "ENGINE": "django.db.backends.mysql",
-            "URL":"mysql://root:FQU2F53f42vWqC61g1U0@containers-us-west-38.railway.app:5946/railway",
-            "NAME": "railway",
-            "USER": "root",
-            "PASSWORD": "FQU2F53f42vWqC61g1U0",
-            "HOST":"containers-us-west-38.railway.app",
-            "PORT":"5946"
-        }
+    "default":dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+        
 }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
