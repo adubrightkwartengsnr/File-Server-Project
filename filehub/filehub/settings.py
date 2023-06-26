@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "accounts",
     "crispy_forms",
     "crispy_bootstrap4",
+    "corsheaders",
 
 
 ]
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -64,7 +66,7 @@ ROOT_URLCONF = "filehub.urls"
 
 
 
-# CSRF_TRUSTED_ORIGINS = ['https://file-server-project-production.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://file-server-project-production.up.railway.app/']
 
 TEMPLATES = [
     {
