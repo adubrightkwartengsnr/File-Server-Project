@@ -64,7 +64,7 @@ ROOT_URLCONF = "filehub.urls"
 
 
 
-CSRF_TRUSTED_ORIGINS = ['https://file-server-project-production.up.railway.app/']
+# CSRF_TRUSTED_ORIGINS = ['https://file-server-project-production.up.railway.app/']
 
 TEMPLATES = [
     {
