@@ -30,6 +30,7 @@
             <div class="card-content">
                 <h4>{{ file.title }}</h4>
                 <p>{{ file.description }}</p>
+                <small>{{ file.uploaded_at }}</small>
             </div>
             <div class="card-actions">
                 <a href="{% url 'file-download' file.id %}"> 
@@ -55,6 +56,7 @@
         <div class="card-content">
             <h4>{{ file.title }}</h4>
             <p>{{ file.description }}</p>
+            <small>{{ file.uploaded_at }}</small>
         </div>
         <div class="card-actions">
             <a href="{% url 'file-download' file.id %}" class="no-underline">
@@ -81,6 +83,7 @@
         <div class="card-content">
             <h4>{{ file.title }}</h4>
             <p>{{ file.description }}</p>
+            <small>{{ file.uploaded_at }}</small>
         </div>
         <div id = "pdf-container" class="card-actions">
             <a href="{% url 'file-download' file.id %}" class="no-underline">
@@ -107,6 +110,7 @@
         <div class="card-content">
             <h4>{{ file.title }}</h4>
             <p>{{ file.description }}</p>
+            <small>{{ file.uploaded_at }}</small>
         </div>
         <div class="card-actions">
             <a href="{% url 'file-download' file.id %}" class="no-underline">
@@ -162,23 +166,6 @@
             $(".file-library[data-category='" + category + "']").show();
         });
     });
-
-{% comment %} Handling Pdf Preview {% endcomment %}
-
-// Get the Container Element
-var container = document.getElementById("pdf-container");
-
-// Configure the Viewer Options
-var viewerOptions = {
-    container: container
-};
-
-// Get the file path from the Django template variable
-var filePath = "{{ file_path }}";
-
-// Load the PDF file
-PDFViewerApplication.open(filePath, viewerOptions);
-
 
 </script>  
 {% endblock content %}

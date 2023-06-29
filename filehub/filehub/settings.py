@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap4",
     "corsheaders",
+    "storages",
 
 
 ]
@@ -101,7 +102,7 @@ WSGI_APPLICATION = "filehub.wsgi.application"
 # Railway Postgre Database Configuration
 DATABASE_URL = "postgresql://postgres:RXG98veNv31zoMODJ9be@containers-us-west-153.railway.app:6476/railway"
 DATABASES = {
-    "default":dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+    "default":dj_database_url.config(default=DATABASE_URL),
         
 }
 # Password validation
@@ -157,7 +158,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+
 STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        'OPTIONS': {},
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
@@ -165,8 +171,17 @@ STORAGES = {
 
 
 
+# STORAGES = {
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }
+
+
+
 # MEDIA FILES
-MEDIA_URL = "/uploads/"
+# MEDIA_URL = "/uploads/"
+MEDIA_URL = "https://storage.googleapis.com/filehub-a4acf.appspot.com/uploads/"
 MEDIA_ROOT = os.path.join(BASE_DIR,"uploads")
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

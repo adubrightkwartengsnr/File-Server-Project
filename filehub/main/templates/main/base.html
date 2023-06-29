@@ -60,7 +60,7 @@
 </nav>
 
 
-<main role="main" class="message-container">
+<main role="main" class="message-container d-flex justify-content-center align-items-center ">
   <div class="row">
     <div class="col-md-8">
       {% if messages %}
@@ -82,14 +82,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 
 <script>
- // Close the alert after 5 duration
- setTimeout(function(){
-  var alertElement = document.getElementById('alert');
-  if (alertElement){
-    alertElement.style.display = 'none';
-  }
-  5000;
- })
+ 
+   // Close the alert after 5 seconds
+   setTimeout(function() {
+    var alertElement = document.getElementById('alert');
+    if (alertElement) {
+      alertElement.style.display = 'none';
+    }
+  }, 5000);
 </script>
 
 
