@@ -5,7 +5,7 @@ from django.contrib.auth.models import BaseUserManager,PermissionsMixin
 
 class CustomUserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
-        # Create and save user with a given email and password
+        # Helper function to Create and save user with a given email and password
         if not email:
             raise ValueError('The Email field must be provided')
         email = self.normalize_email(email)

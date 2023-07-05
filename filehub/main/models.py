@@ -1,6 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.core.files import File as DjangoFile
 import tempfile
 from dotenv import load_dotenv
 import os 
@@ -30,7 +28,7 @@ class File(models.Model):
     downloads = models.IntegerField(default=0)
     emails_sent = models.IntegerField(default=0)
     uploaded_at = models.DateTimeField(auto_now=True)
-    file_token = models.CharField(max_length=10000, null=True)
+    file_token = models.CharField(max_length=10000, null=True,blank=True)
 
     def __str__(self):
         return self.title

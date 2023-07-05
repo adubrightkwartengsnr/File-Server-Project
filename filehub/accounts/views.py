@@ -15,27 +15,6 @@ from .forms import EmailAuthenticationForm
 
 # Create your views here.
 
-def activate(request,uidb64,token):
-    User = get_user_model()
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except:
-        user = None
-    if user is not None and account_activation_token.check_token(user,token):
-        user.is_active = True
-        user.save() 
-        
-        messages.success(request,f'Thank you for confirming your email, You may now login')
-        return redirect('login')
-        
-    else:
-        messages.error(request,f'Activation link is invalid')
-    print(uid) 
-    print(token)
-    print(user)  
-    return redirect('home')
-
 def activate_email(request,user,to_email):
     mail_subject = "Activate your user account"
     message = render_to_string('accounts/activate_account.html',
@@ -52,7 +31,25 @@ def activate_email(request,user,to_email):
         messages.success(request,f'Kindly check your inbox at {to_email} to activate your account ')
     else:
         messages.error(request,f'Problem sending email to {to_email}, please check your email and try again ')
-                
+               
+
+def activate(request,uidb64,token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+    if user is not None and account_activation_token.check_token(user,token):
+        user.is_active = True
+        user.save() 
+        
+        messages.success(request,f'Thank you for confirming your email, You may now login')
+        return redirect('login')
+        
+    else:
+        messages.error(request,f'Activation link is invalid')
+    return redirect('home') 
     
 def signup_view(request):
     if request.method == "POST":
