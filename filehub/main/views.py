@@ -36,7 +36,7 @@ def home(request):
 
 @login_required(login_url="accounts/login/")
 def file_view(request, *args, **kwargs):
-    files = File.objects.all().order_by('-uploaded_at')
+    files = File.objects.all().order_by('uploaded_at')
     return render(request, 'main/file_list.html', {'files': files})
 
 @login_required(login_url="accounts/login/")
